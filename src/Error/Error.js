@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import './App.css';
 
 
-class App extends Component {
+class Error extends Component {
     render() {
         return (
             <div>
-                Hello World!
+                Path does not exist!!!
             </div>
         );
     }
 }
 
-export default App;
+export default Error;
