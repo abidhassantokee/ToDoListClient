@@ -10,12 +10,15 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
     layout: {
         width: 'auto',
-        display: 'block', // Fix IE11 issue.
+        display: 'block',
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -36,7 +39,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE11 issue.
+        width: '100%',
         marginTop: theme.spacing.unit,
     },
     submit: {
@@ -48,7 +51,7 @@ function Form(props) {
     const {classes} = props;
 
     return (
-        <React.Fragment>
+        <BlockUi tag="div" blocking={props.signInState.blockUI}>
             <CssBaseline/>
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
@@ -56,35 +59,33 @@ function Form(props) {
                         <LockIcon/>
                     </Avatar>
                     <Typography variant="headline">Sign in</Typography>
-                    <form className={classes.form}>
+                    <form className={classes.form} onSubmit={props.handleSubmit}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
-                            <Input id="email" name="email" autoFocus/>
+                            <Input id="email" name="email" value={props.signInState.email} onChange={props.handleChange}
+                                   autoFocus/>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input
-                                name="password"
-                                type="password"
-                                id="password"
-                            />
+                            <Input id="password" name="password" type="password" value={props.signInState.password}
+                                   onChange={props.handleChange}/>
                         </FormControl>
                         <p>
                             Not a Registered User? <NavLink to="/register">Register Now!</NavLink>
                         </p>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="raised"
-                            color="primary"
-                            className={classes.submit}
-                        >
+                        <Button type="submit" variant="raised" color="primary" className={classes.submit}>
                             Sign in
                         </Button>
                     </form>
                 </Paper>
             </main>
-        </React.Fragment>
+            <Snackbar
+                open={props.signInState.snackbar.status}
+                autoHideDuration={3000}
+                message={props.signInState.snackbar.message}
+                onClose={props.handleSnackbarClose}
+            />
+        </BlockUi>
     );
 }
 

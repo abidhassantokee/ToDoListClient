@@ -1,24 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
+import {applyMiddleware, createStore} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import promise from 'redux-promise-middleware';
+
+import reducer from './Store/Reducers/index';
 
 import './index.css';
 import App from './App';
-import SignIn from './SignIn/SignIn';
-import Register from './Register/Register'
-import Error from './Error/Error'
 
 import * as serviceWorker from './serviceWorker';
 
+const middleware = applyMiddleware(thunk, promise());
+const store = createStore(reducer, middleware);
+const app = (
+    <Provider store={store}>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    </Provider>
+);
+
+localStorage.setItem('hostAPI', 'http://localhost:8000/api');
+
 ReactDOM.render(
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" component={App}/>
-            <Route exact path="/signin" component={SignIn}/>
-            <Route exact path="/register" component={Register}/>
-            <Route component={Error}/>
-        </Switch>
-    </BrowserRouter>,
+    app,
     document.getElementById('root')
 );
 

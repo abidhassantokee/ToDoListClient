@@ -9,12 +9,15 @@ import InputLabel from '@material-ui/core/InputLabel';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
     layout: {
         width: 'auto',
-        display: 'block', // Fix IE11 issue.
+        display: 'block',
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -35,7 +38,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE11 issue.
+        width: '100%',
         marginTop: theme.spacing.unit,
     },
     submit: {
@@ -47,7 +50,7 @@ function Form(props) {
     const {classes} = props;
 
     return (
-        <React.Fragment>
+        <BlockUi tag="div" blocking={props.registerState.blockUI}>
             <CssBaseline/>
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
@@ -55,44 +58,40 @@ function Form(props) {
                         <AccountCircle/>
                     </Avatar>
                     <Typography variant="headline">Register</Typography>
-                    <form className={classes.form}>
+                    <form className={classes.form} onSubmit={props.handleSubmit}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="name">Name</InputLabel>
-                            <Input id="name" name="name" autoFocus/>
+                            <Input id="name" name="name" value={props.registerState.name} onChange={props.handleChange}
+                                   autoFocus/>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
-                            <Input id="email" name="email"/>
+                            <Input id="email" name="email" value={props.registerState.email}
+                                   onChange={props.handleChange}/>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input
-                                name="password"
-                                type="password"
-                                id="password"
-                            />
+                            <Input id="password" name="password" type="password" value={props.registerState.password}
+                                   onChange={props.handleChange}/>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password_confirmation">Confirm Password</InputLabel>
-                            <Input
-                                name="password_confirmation"
-                                type="password"
-                                id="password_confirmation"
-                            />
+                            <Input id="passwordConfirmation" name="passwordConfirmation" type="password"
+                                   value={props.registerState.passwordConfirmation} onChange={props.handleChange}/>
                         </FormControl>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="raised"
-                            color="primary"
-                            className={classes.submit}
-                        >
+                        <Button type="submit" variant="raised" color="primary" className={classes.submit} fullWidth>
                             Register
                         </Button>
                     </form>
                 </Paper>
             </main>
-        </React.Fragment>
+            <Snackbar
+                open={props.registerState.snackbar.status}
+                autoHideDuration={3000}
+                message={props.registerState.snackbar.message}
+                onClose={props.handleSnackbarClose}
+            />
+        </BlockUi>
     );
 }
 
