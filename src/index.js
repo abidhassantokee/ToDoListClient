@@ -6,15 +6,17 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 
+import configuration from './configuration';
 import reducer from './Store/Reducers/index';
+import App from './App';
 
 import './index.css';
-import App from './App';
 
 import * as serviceWorker from './serviceWorker';
 
 const middleware = applyMiddleware(thunk, promise());
 const store = createStore(reducer, middleware);
+
 const app = (
     <Provider store={store}>
         <BrowserRouter>
@@ -23,7 +25,7 @@ const app = (
     </Provider>
 );
 
-localStorage.setItem('hostAPI', 'http://localhost:8000/api');
+localStorage.setItem('hostAPI', configuration.apiGateway.URL);
 
 ReactDOM.render(
     app,
@@ -34,3 +36,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+
