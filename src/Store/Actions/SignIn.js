@@ -28,7 +28,7 @@ export const signIn = (email, password, component) => {
             email: email,
             password: password,
         }).then(response => {
-            dispatch(signInSuccess(response.data.access_token, response.data.expires_in * 1000));
+            dispatch(signInSuccess(response.data.access_token, new Date(new Date().getTime() + response.data.expires_in * 1000).toString()));
             localStorage.setItem('jwtToken', response.data.access_token);
             localStorage.setItem('jwtExpires', new Date(new Date().getTime() + response.data.expires_in * 1000));
             dispatch(checkTokenTimeout(response.data.expires_in * 1000));

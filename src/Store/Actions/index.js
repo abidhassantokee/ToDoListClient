@@ -3,3 +3,8 @@ export {
     signOut,
     checkTokenState
 } from './SignIn';
+export {
+    getToDOList,
+    addToDoItem,
+    deleteToDoItem
+} from './Notes';
