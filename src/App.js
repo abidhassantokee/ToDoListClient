@@ -7,6 +7,8 @@ import SignIn from './SignIn/SignIn';
 import Register from './Register/Register'
 import Notes from './Notes/Notes'
 
+import NotFound from './Common/NotFound'
+
 
 class App extends Component {
     componentDidMount() {
@@ -16,16 +18,19 @@ class App extends Component {
     render() {
         let routes = (
             <Switch>
+               <Route exact path="/" component={SignIn}/>
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/register" component={Register}/>
-                <Redirect to="/signin"/>
+                <Route component={NotFound}/>
             </Switch>
         );
         if (this.props.isAuthenticated) {
             routes = (
                 <Switch>
                     <Route exact path="/" component={Notes}/>
-                    <Redirect to="/"/>
+                    <Route exact path="/signin" component={Notes}/>
+                    <Route exact path="/register" component={Notes}/>
+                    <Route component={NotFound}/>
                 </Switch>
             );
         }

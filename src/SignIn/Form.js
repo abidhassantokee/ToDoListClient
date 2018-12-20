@@ -58,7 +58,7 @@ function Form(props) {
                     <Avatar className={classes.avatar}>
                         <LockIcon/>
                     </Avatar>
-                    <Typography variant="headline">Sign in</Typography>
+                    <Typography variant="headline">Sign In</Typography>
                     <form className={classes.form} onSubmit={props.handleSubmit}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
