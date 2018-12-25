@@ -18,7 +18,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "REACT_APP_STAGE=development react-scripts start",
+    "start": "react-scripts start",
     "staged-build": "REACT_APP_STAGE=staged react-scripts build",
     "build": "REACT_APP_STAGE=production react-scripts build",
     "test": "react-scripts test",
